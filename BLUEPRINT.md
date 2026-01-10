@@ -12,12 +12,6 @@ This blueprint uses:
 
 # DualSenseMapper BLUEPRINT
 
-## What is a “menu bar utility”?
-
-A **menu bar utility** is a normal macOS app whose primary interface is a persistent control in the macOS **menu bar** (top of the screen). In SwiftUI, this is implemented using `MenuBarExtra`. ([Apple Developer][1])
-
-You click its icon in the menu bar to open a small menu/popup with controls (Enable/Disable, status, etc.).
-
 ---
 
 ## Critical Notes (do not skip)
