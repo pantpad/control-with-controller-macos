@@ -1,12 +1,12 @@
 This blueprint uses:
 
-* SwiftUI `MenuBarExtra` for the menu bar UI. ([Apple Developer][1])
-* GameController `GCDualSenseGamepad` (preferred) and `GCExtendedGamepad` (fallback), with `valueChangedHandler`. ([Apple Developer][2])
-* Controller connect notifications `NSNotification.Name.GCControllerDidConnect/Disconnect`. ([Apple Developer][3])
-* Accessibility trust prompt via `AXIsProcessTrustedWithOptions`. ([Apple Developer][4])
-* Quartz event injection via `CGEvent` initializers + `post(tap:)` at `.cghidEventTap`. ([Apple Developer][5])
-* Mouse button 4/5 via `.mouseEventButtonNumber`. ([Apple Developer][6])
-* Smooth scrolling via `CGEvent` scroll wheel initializer. ([Apple Developer][7])
+- SwiftUI `MenuBarExtra` for the menu bar UI. ([Apple Developer][1])
+- GameController `GCDualSenseGamepad` (preferred) and `GCExtendedGamepad` (fallback), with `valueChangedHandler`. ([Apple Developer][2])
+- Controller connect notifications `NSNotification.Name.GCControllerDidConnect/Disconnect`. ([Apple Developer][3])
+- Accessibility trust prompt via `AXIsProcessTrustedWithOptions`. ([Apple Developer][4])
+- Quartz event injection via `CGEvent` initializers + `post(tap:)` at `.cghidEventTap`. ([Apple Developer][5])
+- Mouse button 4/5 via `.mouseEventButtonNumber`. ([Apple Developer][6])
+- Smooth scrolling via `CGEvent` scroll wheel initializer. ([Apple Developer][7])
 
 ---
 
@@ -36,22 +36,23 @@ You click its icon in the menu bar to open a small menu/popup with controls (Ena
 
 Build a macOS 15 menu bar app that:
 
-* Reads DualSense input using GameController:
+- Reads DualSense input using GameController:
 
-  * Prefer `controller.dualSenseGamepad`
-  * Fallback to `controller.extendedGamepad` ([Apple Developer][2])
-* Updates a `GamepadState` snapshot via `valueChangedHandler`. ([Apple Developer][9])
-* Injects mouse/keyboard using Quartz `CGEvent` + `.post(tap: .cghidEventTap)`. ([Apple Developer][5])
-* Uses **one hardcoded mapping** (no profiles, no launch-at-login).
+  - Prefer `controller.dualSenseGamepad`
+  - Fallback to `controller.extendedGamepad` ([Apple Developer][2])
+
+- Updates a `GamepadState` snapshot via `valueChangedHandler`. ([Apple Developer][9])
+- Injects mouse/keyboard using Quartz `CGEvent` + `.post(tap: .cghidEventTap)`. ([Apple Developer][5])
+- Uses **one hardcoded mapping** (no profiles, no launch-at-login).
 
 ### Hardcoded mapping (v1)
 
-* Left stick → move cursor
-* R2 → left click (press/release)
-* L2 → right click (press/release)
-* D-pad up/down → scroll vertical
-* L1 → mouse button 4
-* R1 → mouse button 5
+- Left stick → move cursor
+- R2 → left click (press/release)
+- L2 → right click (press/release)
+- D-pad up/down → scroll vertical
+- L1 → mouse button 4
+- R1 → mouse button 5
 
 (Mouse buttons 4/5: implemented via `.mouseEventButtonNumber`.) ([Apple Developer][6])
 
@@ -66,20 +67,20 @@ Build a macOS 15 menu bar app that:
 
 **Implement**
 
-* SwiftUI app using `MenuBarExtra`. ([Apple Developer][1])
-* Menu contains:
+- SwiftUI app using `MenuBarExtra`. ([Apple Developer][1])
+- Menu contains:
 
-  * Toggle: Enabled
-  * Text: Accessibility status
-  * Text: Controller status
-  * Quit button
-  * Debug section (it will show zeros until Milestone 4)
+  - Toggle: Enabled
+  - Text: Accessibility status
+  - Text: Controller status
+  - Quit button
+  - Debug section (it will show zeros until Milestone 4)
 
 **MANUAL CHECK**
 
-* App appears in the menu bar.
-* Toggle flips on/off.
-* Quit works.
+- App appears in the menu bar.
+- Toggle flips on/off.
+- Quit works.
 
 ---
 
@@ -87,15 +88,15 @@ Build a macOS 15 menu bar app that:
 
 **Implement**
 
-* `PermissionService.ensureTrusted(prompt:)` using `AXIsProcessTrustedWithOptions`. ([Apple Developer][4])
-* When user toggles Enabled ON:
+- `PermissionService.ensureTrusted(prompt:)` using `AXIsProcessTrustedWithOptions`. ([Apple Developer][4])
+- When user toggles Enabled ON:
 
-  * If not trusted: prompt, show Not granted, force Enabled OFF.
+  - If not trusted: prompt, show Not granted, force Enabled OFF.
 
 **MANUAL CHECK**
 
-* Toggling Enabled ON prompts you to grant Accessibility (or shows Granted if already).
-* If not granted, app does not enable mapping.
+- Toggling Enabled ON prompts you to grant Accessibility (or shows Granted if already).
+- If not granted, app does not enable mapping.
 
 ---
 
@@ -103,18 +104,18 @@ Build a macOS 15 menu bar app that:
 
 **Implement**
 
-* `MouseInjector` and `KeyboardInjector` using `CGEvent` initializers + `.post(tap:)`. ([Apple Developer][5])
-* Add temporary menu buttons:
+- `MouseInjector` and `KeyboardInjector` using `CGEvent` initializers + `.post(tap:)`. ([Apple Developer][5])
+- Add temporary menu buttons:
 
-  * “Test Mouse Click”
-  * “Test Type Enter”
+  - “Test Mouse Click”
+  - “Test Type Enter”
 
 **MANUAL CHECK**
 
-* After granting Accessibility:
+- After granting Accessibility:
 
-  * “Test Mouse Click” clicks at cursor.
-  * “Test Type Enter” presses Enter in TextEdit.
+  - “Test Mouse Click” clicks at cursor.
+  - “Test Type Enter” presses Enter in TextEdit.
 
 ---
 
@@ -122,13 +123,13 @@ Build a macOS 15 menu bar app that:
 
 **Implement**
 
-* Observe `NSNotification.Name.GCControllerDidConnect` / `GCControllerDidDisconnect`. ([Apple Developer][3])
-* Update controller connected status and show it in the menu.
+- Observe `NSNotification.Name.GCControllerDidConnect` / `GCControllerDidDisconnect`. ([Apple Developer][3])
+- Update controller connected status and show it in the menu.
 
 **MANUAL CHECK**
 
-* Pair DualSense via Bluetooth.
-* Turning controller on/off updates “Controller: Connected/Disconnected”.
+- Pair DualSense via Bluetooth.
+- Turning controller on/off updates “Controller: Connected/Disconnected”.
 
 ---
 
@@ -136,16 +137,16 @@ Build a macOS 15 menu bar app that:
 
 **Implement**
 
-* Prefer DualSense profile `GCDualSenseGamepad`, fallback `GCExtendedGamepad`. ([Apple Developer][2])
-* Update `ControllerService.state` in `valueChangedHandler`. ([Apple Developer][9])
-* **Critical:** mirror `ControllerService.$state` into `AppModel.@Published debugState` (Combine fix below).
+- Prefer DualSense profile `GCDualSenseGamepad`, fallback `GCExtendedGamepad`. ([Apple Developer][2])
+- Update `ControllerService.state` in `valueChangedHandler`. ([Apple Developer][9])
+- **Critical:** mirror `ControllerService.$state` into `AppModel.@Published debugState` (Combine fix below).
 
 **MANUAL CHECK**
 
-* Open the menu and keep it open.
-* Move left stick → values update live.
-* Press L2/R2 → trigger values update live.
-* Press D-pad/L1/R1 → booleans update live.
+- Open the menu and keep it open.
+- Move left stick → values update live.
+- Press L2/R2 → trigger values update live.
+- Press D-pad/L1/R1 → booleans update live.
 
 ---
 
@@ -153,17 +154,17 @@ Build a macOS 15 menu bar app that:
 
 **Implement**
 
-* Timer (60–120 Hz).
-* If Enabled + controller connected:
+- Timer (60–120 Hz).
+- If Enabled + controller connected:
 
-  * dead zone
-  * cursor delta per tick
-  * move cursor
+  - dead zone
+  - cursor delta per tick
+  - move cursor
 
 **MANUAL CHECK**
 
-* Enabled ON → left stick moves cursor.
-* Enabled OFF → cursor stops responding.
+- Enabled ON → left stick moves cursor.
+- Enabled OFF → cursor stops responding.
 
 ---
 
@@ -171,21 +172,22 @@ Build a macOS 15 menu bar app that:
 
 **Implement**
 
-* Edge detection (compare previous vs current state).
-* Map:
+- Edge detection (compare previous vs current state).
+- Map:
 
-  * R2 threshold → left down/up
-  * L2 threshold → right down/up
-  * D-pad up/down held → continuous scroll (emit scroll events)
-  * L1/R1 edges → other mouse buttons using `.mouseEventButtonNumber` ([Apple Developer][6])
-* Scroll event uses `CGEvent` scroll initializer. ([Apple Developer][7])
+  - R2 threshold → left down/up
+  - L2 threshold → right down/up
+  - D-pad up/down held → continuous scroll (emit scroll events)
+  - L1/R1 edges → other mouse buttons using `.mouseEventButtonNumber` ([Apple Developer][6])
+
+- Scroll event uses `CGEvent` scroll initializer. ([Apple Developer][7])
 
 **MANUAL CHECK**
 
-* R2 left click works.
-* L2 right click works.
-* D-pad scrolls in a web page.
-* L1/R1 work as mouse button 4/5 (browser back/forward if supported).
+- R2 left click works.
+- L2 right click works.
+- D-pad scrolls in a web page.
+- L1/R1 work as mouse button 4/5 (browser back/forward if supported).
 
 ---
 
@@ -193,12 +195,12 @@ Build a macOS 15 menu bar app that:
 
 **Implement**
 
-* Map one controller button to one key (e.g., “Cross → Space” later).
-* Use `CGEvent` keyboard initializer and post. ([Apple Developer][10])
+- Map one controller button to one key (e.g., “Cross → Space” later).
+- Use `CGEvent` keyboard initializer and post. ([Apple Developer][10])
 
 **MANUAL CHECK**
 
-* Press mapped button; verify key appears in TextEdit.
+- Press mapped button; verify key appears in TextEdit.
 
 ---
 
@@ -316,7 +318,7 @@ struct DebugControllerView: View {
 }
 ```
 
-## App/AppModel.swift  ✅ (includes the debug-state publishing fix)
+## App/AppModel.swift ✅ (includes the debug-state publishing fix)
 
 ```swift
 import SwiftUI
@@ -739,59 +741,3 @@ import Foundation
 ```
 
 ---
-
-# README.md
-
-```md
-# DualSenseMapper (macOS 15)
-
-Minimal macOS menu bar utility that maps a DualSense controller to mouse/keyboard input.
-
-## What is this?
-This is a **menu bar utility**: it shows a persistent icon in the macOS menu bar and displays controls in a small menu when clicked.
-
-## Requirements
-- macOS 15 (Sequoia)
-- Xcode 16.x
-
-## Build & Run
-1. Open `DualSenseMapper.xcodeproj` in Xcode.
-2. Select the `DualSenseMapper` scheme and your Mac as run destination.
-3. Run (⌘R).
-4. The app appears in the menu bar (top of screen).
-
-## Pair DualSense (Bluetooth)
-1. Pair the controller in macOS Bluetooth settings.
-2. Turn it on.
-3. The menu should show **Controller: Connected** after Milestone 3.
-
-## Accessibility Permission (REQUIRED for injection)
-This app injects mouse/keyboard using Quartz events (`CGEvent.post(tap:)`). It will not work unless macOS grants Accessibility permission.
-1. Click the menu bar icon.
-2. Toggle **Enabled** ON.
-3. If prompted: System Settings → Privacy & Security → Accessibility → enable DualSenseMapper.
-4. Return to the app and toggle Enabled ON again.
-
-## Manual Milestone Checks (these are NOT automated tests)
-- Milestone 0: Menu bar appears; Quit works.
-- Milestone 1: Enabling prompts for Accessibility; status updates.
-- Milestone 2: "Test Mouse Click" and "Test Type Enter" work (after permission).
-- Milestone 3: Controller connect/disconnect status updates.
-- Milestone 4: Debug section shows live stick/trigger values updating in the menu.
-- Milestone 5+: Cursor moves; then clicks/scroll/mouse4/5.
-```
-
----
-
-If you want, once you get Milestone 4 working, I can add an optional debug line showing **thresholded pressed state** for L2/R2 (based on your `Mapping.triggerPressedThreshold`) to make Milestone 6 tuning easier.
-
-[1]: https://developer.apple.com/documentation/swiftui/menubarextra?utm_source=chatgpt.com "MenuBarExtra | Apple Developer Documentation"
-[2]: https://developer.apple.com/documentation/gamecontroller/gcdualsensegamepad?utm_source=chatgpt.com "GCDualSenseGamepad | Apple Developer Documentation"
-[3]: https://developer.apple.com/documentation/Foundation/NSNotification/Name-swift.struct/GCControllerDidConnect?utm_source=chatgpt.com "GCControllerDidConnect | Apple Developer Documentation"
-[4]: https://developer.apple.com/documentation/applicationservices/1459186-axisprocesstrustedwithoptions?language=objc&utm_source=chatgpt.com "AXIsProcessTrustedWithOptions"
-[5]: https://developer.apple.com/documentation/coregraphics/cgevent/init%28mouseeventsource%3Amousetype%3Amousecursorposition%3Amousebutton%3A%29?utm_source=chatgpt.com "init(mouseEventSource:mouseType:mouseCursorPosition: ..."
-[6]: https://developer.apple.com/documentation/coregraphics/cgeventfield/mouseeventbuttonnumber?utm_source=chatgpt.com "CGEventField.mouseEventButtonNumber"
-[7]: https://developer.apple.com/documentation/coregraphics/cgevent/init%28scrollwheelevent2source%3Aunits%3Awheelcount%3Awheel1%3Awheel2%3Awheel3%3A%29?utm_source=chatgpt.com "init(scrollWheelEvent2Source:units:wheelCount:wheel1: ..."
-[8]: https://developer.apple.com/documentation/coregraphics/cgevent/post%28tap%3A%29?utm_source=chatgpt.com "post(tap:) | Apple Developer Documentation"
-[9]: https://developer.apple.com/documentation/gamecontroller/gcextendedgamepad/valuechangedhandler?utm_source=chatgpt.com "valueChangedHandler | Apple Developer Documentation"
-[10]: https://developer.apple.com/documentation/coregraphics/cgevent/init%28keyboardeventsource%3Avirtualkey%3Akeydown%3A%29?utm_source=chatgpt.com "init(keyboardEventSource:virtualKey:keyDown:)"
