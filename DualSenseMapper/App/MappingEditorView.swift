@@ -90,9 +90,9 @@ struct MappingEditorView: View {
             ForEach(InputID.allCases, id: \.self) { input in
                 VStack(alignment: .leading, spacing: 2) {
                     Text(input.displayName)
-                    Text(actionSummary(draft.bindings[input] ?? .none))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                Text((draft.bindings[input] ?? Action.none).summary())
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
                 }
                 .tag(Optional(input))
             }
@@ -100,24 +100,31 @@ struct MappingEditorView: View {
     }
 
     private var detail: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(currentInput.displayName)
-                .font(.title2)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 12) {
+                ControllerDiagramView(selectedInput: $selectedInput, config: draft)
+                    .environmentObject(model)
 
-            Picker("Action", selection: $actionKind) {
-                ForEach(ActionKind.allCases) { kind in
-                    Text(kind.label).tag(kind)
+                Divider()
+
+                Text(currentInput.displayName)
+                    .font(.title2)
+
+                Picker("Action", selection: $actionKind) {
+                    ForEach(ActionKind.allCases) { kind in
+                        Text(kind.label).tag(kind)
+                    }
                 }
-            }
-            .pickerStyle(.menu)
+                .pickerStyle(.menu)
 
-            if actionKind.isKeyboard {
-                keyEditor
-            }
+                if actionKind.isKeyboard {
+                    keyEditor
+                }
 
-            Spacer()
+                Spacer(minLength: 0)
+            }
+            .padding(16)
         }
-        .padding(16)
     }
 
     @ToolbarContentBuilder
@@ -239,45 +246,4 @@ struct MappingEditorView: View {
         }
     }
 
-    private func actionSummary(_ action: Action) -> String {
-        switch action {
-        case .none:
-            return "None"
-
-        case .mouseLeftHold:
-            return "Mouse: Left Hold"
-        case .mouseRightHold:
-            return "Mouse: Right Hold"
-        case .mouseMiddleClick:
-            return "Mouse: Middle Click"
-        case .mouseButton4:
-            return "Mouse: Button 4"
-        case .mouseButton5:
-            return "Mouse: Button 5"
-
-        case let .keyTap(spec):
-            return "Key Tap: \(KeyCatalog.name(for: spec.keyCode))\(modsSuffix(spec.modifiers))"
-        case let .keyHold(spec):
-            return "Key Hold: \(KeyCatalog.name(for: spec.keyCode))\(modsSuffix(spec.modifiers))"
-        case let .keyCombo(spec):
-            return "Key Combo: \(KeyCatalog.name(for: spec.keyCode))\(modsSuffix(spec.modifiers))"
-        }
-    }
-
-    private func modsSuffix(_ mods: Set<KeyModifier>) -> String {
-        if mods.isEmpty { return "" }
-
-        let ordered: [KeyModifier] = [.command, .option, .control, .shift]
-        let parts = ordered.compactMap { m -> String? in
-            guard mods.contains(m) else { return nil }
-            switch m {
-            case .command: return "Cmd"
-            case .option: return "Opt"
-            case .control: return "Ctrl"
-            case .shift: return "Shift"
-            }
-        }
-
-        return " (" + parts.joined(separator: "+") + ")"
-    }
 }

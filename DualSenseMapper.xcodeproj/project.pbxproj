@@ -22,6 +22,8 @@
 		AA00000D /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000036 /* ConfigStore.swift */; };
 		AA00000E /* KeyCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000037 /* KeyCatalog.swift */; };
 		AA00000F /* MappingEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000038 /* MappingEditorView.swift */; };
+		B1000001 /* ActionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000039 /* ActionLabel.swift */; };
+		B1000002 /* ControllerDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00003A /* ControllerDiagramView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		AA000036 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 		AA000037 /* KeyCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCatalog.swift; sourceTree = "<group>"; };
 		AA000038 /* MappingEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingEditorView.swift; sourceTree = "<group>"; };
+		AA000039 /* ActionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionLabel.swift; sourceTree = "<group>"; };
+		AA00003A /* ControllerDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerDiagramView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,8 @@
 				AA000015 /* GamepadState.swift */,
 				AA000037 /* KeyCatalog.swift */,
 				AA000038 /* MappingEditorView.swift */,
+				AA000039 /* ActionLabel.swift */,
+				AA00003A /* ControllerDiagramView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -183,6 +189,8 @@
 				AA00000D /* ConfigStore.swift in Sources */,
 				AA00000E /* KeyCatalog.swift in Sources */,
 				AA00000F /* MappingEditorView.swift in Sources */,
+				B1000001 /* ActionLabel.swift in Sources */,
+				B1000002 /* ControllerDiagramView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
