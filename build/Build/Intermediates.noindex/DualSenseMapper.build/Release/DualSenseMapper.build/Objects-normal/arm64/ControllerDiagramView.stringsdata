@@ -1,0 +1,24 @@
+{
+  "source": "/Users/forward/projects/control-cursor/DualSenseMapper/App/ControllerDiagramView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Controller",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 11
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unsupported",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 93
+        }
+      }
+    ]
+  },
+  "version": 1
+}

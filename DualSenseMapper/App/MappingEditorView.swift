@@ -12,12 +12,13 @@ private enum ActionKind: String, CaseIterable, Identifiable {
     case keyTap
     case keyHold
     case keyCombo
+    case modifiersHold
 
     var id: String { rawValue }
 
     var isKeyboard: Bool {
         switch self {
-        case .keyTap, .keyHold, .keyCombo: return true
+        case .keyTap, .keyHold, .keyCombo, .modifiersHold: return true
         default: return false
         }
     }
@@ -33,6 +34,7 @@ private enum ActionKind: String, CaseIterable, Identifiable {
         case .keyTap: return "Key: Tap"
         case .keyHold: return "Key: Hold"
         case .keyCombo: return "Key: Combo"
+        case .modifiersHold: return "Key: Modifiers Hold"
         }
     }
 
@@ -47,6 +49,7 @@ private enum ActionKind: String, CaseIterable, Identifiable {
         case .keyTap: self = .keyTap
         case .keyHold: self = .keyHold
         case .keyCombo: self = .keyCombo
+        case .modifiersHold: self = .modifiersHold
         }
     }
 }
@@ -118,7 +121,11 @@ struct MappingEditorView: View {
                 .pickerStyle(.menu)
 
                 if actionKind.isKeyboard {
-                    keyEditor
+                    if actionKind == .modifiersHold {
+                        modifiersOnlyEditor
+                    } else {
+                        keyEditor
+                    }
                 }
 
                 Spacer(minLength: 0)
@@ -144,6 +151,24 @@ struct MappingEditorView: View {
                 draft = AppConfig.default()
                 loadEditorFromDraft()
             }
+        }
+    }
+
+    private var modifiersOnlyEditor: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Modifiers")
+                .font(.headline)
+
+            HStack(spacing: 16) {
+                modifierToggle(.command, label: "Cmd")
+                modifierToggle(.option, label: "Opt")
+                modifierToggle(.control, label: "Ctrl")
+                modifierToggle(.shift, label: "Shift")
+            }
+
+            Text("Hold selected modifiers while controller button held")
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
     }
 
@@ -207,6 +232,8 @@ struct MappingEditorView: View {
         case let .keyTap(spec), let .keyHold(spec), let .keyCombo(spec):
             keyCode = spec.keyCode
             modifiers = spec.modifiers
+        case let .modifiersHold(mods):
+            modifiers = mods
         default:
             // Keep current selection; still allow picking keys before switching kind.
             break
@@ -237,6 +264,9 @@ struct MappingEditorView: View {
             newAction = .keyHold(KeySpec(keyCode: keyCode, modifiers: modifiers))
         case .keyCombo:
             newAction = .keyCombo(KeySpec(keyCode: keyCode, modifiers: modifiers))
+
+        case .modifiersHold:
+            newAction = modifiers.isEmpty ? .none : .modifiersHold(modifiers)
         }
 
         if case .none = newAction {

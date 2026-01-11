@@ -12,11 +12,32 @@ This is a **menu bar utility**: it shows a persistent icon in the macOS menu bar
 - macOS 15 (Sequoia)
 - Xcode 16.x
 
-## Build & Run
+## Build & Run (Xcode)
 1. Open `DualSenseMapper.xcodeproj` in Xcode.
 2. Select the `DualSenseMapper` scheme and your Mac as run destination.
 3. Run (⌘R).
 4. The app appears in the menu bar (top of screen).
+
+## Build `.app` + install to `/Applications` (recommended for real use)
+When running from Xcode, the app path changes frequently (DerivedData). For stable Accessibility permissions + easy launching, install a built `.app` into `/Applications`.
+
+### Option A: Xcode Archive (GUI)
+1. Product → Archive
+2. Distribute App → Custom → Copy App
+3. Move/copy `DualSenseMapper.app` to `/Applications`
+
+### Option B: `xcodebuild` (CLI)
+From repo root:
+- Build Release:
+  - `xcodebuild -project DualSenseMapper.xcodeproj -scheme DualSenseMapper -configuration Release -derivedDataPath build build`
+- Install:
+  - `ditto "build/Build/Products/Release/DualSenseMapper.app" "/Applications/DualSenseMapper.app"`
+- Launch:
+  - `open -a "/Applications/DualSenseMapper.app"`
+
+### Updating after code changes
+- Rebuild + re-copy to `/Applications` (same commands as above).
+- macOS may treat the rebuilt app as “new” for Accessibility.
 
 ## Pair DualSense (Bluetooth)
 1. Pair the controller in macOS Bluetooth settings.
@@ -25,11 +46,18 @@ This is a **menu bar utility**: it shows a persistent icon in the macOS menu bar
 
 ## Accessibility Permission (REQUIRED for injection)
 This app injects mouse/keyboard using Quartz events (`CGEvent.post(tap:)`). It will not work unless macOS grants Accessibility permission.
+
+### First time
 1. Click the menu bar icon.
 2. Toggle **Enabled** ON.
 3. If prompted: System Settings → Privacy & Security → Accessibility → enable DualSenseMapper.
 4. Return to the app and toggle Enabled ON again.
 
+### After moving/updating the app
+Accessibility permission can be tied to app *path* + code signature. If you rebuild and replace `/Applications/DualSenseMapper.app` and injection stops working:
+1. System Settings → Privacy & Security → Accessibility
+2. Disable then re-enable `DualSenseMapper` (or remove and add again)
+3. Relaunch the app from `/Applications`
 ## Manual Milestone Checks (these are NOT automated tests)
 - Milestone 0: Menu bar appears; Quit works.
 - Milestone 1: Enabling prompts for Accessibility; status updates.

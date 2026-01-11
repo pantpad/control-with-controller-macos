@@ -189,6 +189,8 @@ final class ActionEngine {
             tapKeySpec(spec)
         case let .keyHold(spec):
             keySpecDown(spec)
+        case let .modifiersHold(mods):
+            modifiersDown(mods)
         }
     }
 
@@ -212,6 +214,8 @@ final class ActionEngine {
             break
         case let .keyHold(spec):
             keySpecUp(spec)
+        case let .modifiersHold(mods):
+            modifiersUp(mods)
         }
     }
 

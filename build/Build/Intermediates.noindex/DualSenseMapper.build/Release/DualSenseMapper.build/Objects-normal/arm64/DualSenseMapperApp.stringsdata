@@ -1,0 +1,24 @@
+{
+  "source": "/Users/forward/projects/control-cursor/DualSenseMapper/App/DualSenseMapperApp.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "DualSenseMapper",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 8
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappings",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 17
+        }
+      }
+    ]
+  },
+  "version": 1
+}

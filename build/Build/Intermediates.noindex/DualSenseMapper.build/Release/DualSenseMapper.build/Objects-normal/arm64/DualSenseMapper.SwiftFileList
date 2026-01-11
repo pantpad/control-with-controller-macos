@@ -1,0 +1,17 @@
+/Users/forward/projects/control-cursor/DualSenseMapper/App/DualSenseMapperApp.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/App/MenuBarRootView.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/App/DebugControllerView.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/App/AppModel.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/App/GamepadState.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/Core/PermissionService.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/Output/MouseInjector.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/Output/KeyboardInjector.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/Core/ControllerService.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/Core/Mapping.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/Core/ActionEngine.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/Core/AppConfig.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/Core/ConfigStore.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/App/KeyCatalog.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/App/MappingEditorView.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/App/ActionLabel.swift
+/Users/forward/projects/control-cursor/DualSenseMapper/App/ControllerDiagramView.swift

@@ -63,6 +63,7 @@ enum Action: Codable, Hashable {
     case keyTap(KeySpec)
     case keyHold(KeySpec)
     case keyCombo(KeySpec) // modifiers down + key tap + modifiers up
+    case modifiersHold(Set<KeyModifier>) // modifiers down while held
 }
 
 extension InputID {

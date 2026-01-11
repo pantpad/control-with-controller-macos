@@ -23,6 +23,9 @@ extension Action {
             return "Key Hold: \(KeyCatalog.name(for: spec.keyCode))\(modsSuffix(spec.modifiers))"
         case let .keyCombo(spec):
             return "Key Combo: \(KeyCatalog.name(for: spec.keyCode))\(modsSuffix(spec.modifiers))"
+
+        case let .modifiersHold(mods):
+            return "Mods Hold: \(modsLabel(mods))"
         }
     }
 
@@ -47,12 +50,20 @@ extension Action {
             if s.count > 8 { s = String(s.prefix(8)) }
             if !spec.modifiers.isEmpty { s = modsShort(spec.modifiers) + "+" + s }
             return s
+
+        case let .modifiersHold(mods):
+            return modsShort(mods)
         }
     }
 
     private func modsSuffix(_ mods: Set<KeyModifier>) -> String {
         if mods.isEmpty { return "" }
-        return " (" + modsShort(mods).replacingOccurrences(of: "+", with: "+") + ")"
+        return " (" + modsShort(mods) + ")"
+    }
+
+    private func modsLabel(_ mods: Set<KeyModifier>) -> String {
+        let s = modsShort(mods)
+        return s.isEmpty ? "(none)" : s
     }
 
     private func modsShort(_ mods: Set<KeyModifier>) -> String {

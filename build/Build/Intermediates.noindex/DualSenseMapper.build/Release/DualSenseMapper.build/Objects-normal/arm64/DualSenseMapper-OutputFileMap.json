@@ -1,0 +1,96 @@
+{
+  "" : {
+    "const-values" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/DualSenseMapper-primary.swiftconstvalues",
+    "dependencies" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/DualSenseMapper-primary.d",
+    "diagnostics" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/DualSenseMapper-primary.dia",
+    "emit-module-dependencies" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/DualSenseMapper-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/DualSenseMapper-primary-emit-module.dia",
+    "pch" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/DualSenseMapper-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/DualSenseMapper-primary.swiftdeps"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/App/ActionLabel.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ActionLabel.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ActionLabel.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ActionLabel.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/App/AppModel.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/AppModel.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/AppModel.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/AppModel.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/App/ControllerDiagramView.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ControllerDiagramView.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ControllerDiagramView.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ControllerDiagramView.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/App/DebugControllerView.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/DebugControllerView.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/DebugControllerView.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/DebugControllerView.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/App/DualSenseMapperApp.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/DualSenseMapperApp.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/DualSenseMapperApp.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/DualSenseMapperApp.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/App/GamepadState.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/GamepadState.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/GamepadState.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/GamepadState.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/App/KeyCatalog.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/KeyCatalog.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/KeyCatalog.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/KeyCatalog.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/App/MappingEditorView.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/MappingEditorView.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/MappingEditorView.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/MappingEditorView.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/App/MenuBarRootView.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/MenuBarRootView.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/MenuBarRootView.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/MenuBarRootView.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/Core/ActionEngine.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ActionEngine.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ActionEngine.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ActionEngine.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/Core/AppConfig.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/AppConfig.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/AppConfig.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/AppConfig.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/Core/ConfigStore.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ConfigStore.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ConfigStore.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ConfigStore.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/Core/ControllerService.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ControllerService.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ControllerService.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/ControllerService.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/Core/Mapping.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/Mapping.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/Mapping.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/Mapping.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/Core/PermissionService.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/PermissionService.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/PermissionService.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/PermissionService.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/Output/KeyboardInjector.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/KeyboardInjector.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/KeyboardInjector.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/KeyboardInjector.o"
+  },
+  "/Users/forward/projects/control-cursor/DualSenseMapper/Output/MouseInjector.swift" : {
+    "index-unit-output-path" : "/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/MouseInjector.o",
+    "llvm-bc" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/MouseInjector.bc",
+    "object" : "/Users/forward/projects/control-cursor/build/Build/Intermediates.noindex/DualSenseMapper.build/Release/DualSenseMapper.build/Objects-normal/arm64/MouseInjector.o"
+  }
+}
