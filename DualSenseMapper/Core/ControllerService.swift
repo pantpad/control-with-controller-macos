@@ -1,9 +1,10 @@
 import Foundation
 import GameController
 
-// Milestone 3: Controller connect/disconnect detection only
+// Milestone 4: Added controller state reading via valueChangedHandler
 @MainActor
 final class ControllerService: ObservableObject {
+    @Published private(set) var state = GamepadState()
     @Published private(set) var isConnected: Bool = false
 
     private var activeController: GCController?
@@ -38,13 +39,41 @@ final class ControllerService: ObservableObject {
         if c == activeController {
             activeController = nil
             isConnected = false
+            state = GamepadState()
         }
     }
 
     private func attach(_ controller: GCController) {
         activeController = controller
         isConnected = true
-        // Milestone 3: Just detect connection
-        // Will add input reading in Milestone 4
+
+        // Milestone 4: Read controller input via extendedGamepad
+        // (DualSense controllers support extendedGamepad profile)
+        if let eg = controller.extendedGamepad {
+            wireExtendedLikeInputs(eg)
+        }
+    }
+
+    private func wireExtendedLikeInputs(_ pad: GCExtendedGamepad) {
+        pad.valueChangedHandler = { [weak self] gamepad, _ in
+            guard let self else { return }
+            var s = self.state
+
+            s.leftX = gamepad.leftThumbstick.xAxis.value
+            s.leftY = gamepad.leftThumbstick.yAxis.value
+
+            s.l2 = gamepad.leftTrigger.value
+            s.r2 = gamepad.rightTrigger.value
+
+            s.dpadUp = gamepad.dpad.up.isPressed
+            s.dpadDown = gamepad.dpad.down.isPressed
+            s.dpadLeft = gamepad.dpad.left.isPressed
+            s.dpadRight = gamepad.dpad.right.isPressed
+
+            s.l1 = gamepad.leftShoulder.isPressed
+            s.r1 = gamepad.rightShoulder.isPressed
+
+            self.state = s
+        }
     }
 }

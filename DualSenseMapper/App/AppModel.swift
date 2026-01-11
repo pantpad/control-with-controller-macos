@@ -2,12 +2,12 @@ import SwiftUI
 import AppKit
 import Combine
 
-// Milestone 3: Added ControllerService for connect/disconnect detection
+// Milestone 4: Added controller state mirroring to debugState
 @MainActor
 final class AppModel: ObservableObject {
     @Published var enabled: Bool = false
 
-    // Debug state (will show zeros until Milestone 4)
+    // ✅ Published mirrors so SwiftUI updates while menu is open
     @Published private(set) var debugState: GamepadState = .init()
     @Published private(set) var controllerConnected: Bool = false
 
@@ -19,6 +19,14 @@ final class AppModel: ObservableObject {
     private let keyboard = KeyboardInjector()
 
     init() {
+        // Milestone 4: Mirror controller state to debugState (critical for UI updates)
+        controller.$state
+            .receive(on: RunLoop.main)
+            .sink { [weak self] newState in
+                self?.debugState = newState
+            }
+            .store(in: &cancellables)
+
         // Milestone 3: Observe controller connection status
         controller.$isConnected
             .receive(on: RunLoop.main)
