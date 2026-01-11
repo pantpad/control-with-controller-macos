@@ -18,6 +18,8 @@
 		AA000009 /* ControllerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000022 /* ControllerService.swift */; };
 		AA00000A /* Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000033 /* Mapping.swift */; };
 		AA00000B /* ActionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000034 /* ActionEngine.swift */; };
+		AA00000C /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000035 /* AppConfig.swift */; };
+		AA00000D /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000036 /* ConfigStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,8 @@
 		AA000032 /* KeyboardInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardInjector.swift; sourceTree = "<group>"; };
 		AA000033 /* Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapping.swift; sourceTree = "<group>"; };
 		AA000034 /* ActionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEngine.swift; sourceTree = "<group>"; };
+		AA000035 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		AA000036 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,8 @@
 				AA000022 /* ControllerService.swift */,
 				AA000033 /* Mapping.swift */,
 				AA000034 /* ActionEngine.swift */,
+				AA000035 /* AppConfig.swift */,
+				AA000036 /* ConfigStore.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -167,6 +173,8 @@
 				AA000009 /* ControllerService.swift in Sources */,
 				AA00000A /* Mapping.swift in Sources */,
 				AA00000B /* ActionEngine.swift in Sources */,
+				AA00000C /* AppConfig.swift in Sources */,
+				AA00000D /* ConfigStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

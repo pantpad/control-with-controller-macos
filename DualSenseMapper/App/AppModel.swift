@@ -6,7 +6,7 @@ import Combine
 @MainActor
 final class AppModel: ObservableObject {
     /// Bump this when you complete a milestone/feature.
-    static let featureVersion = "0.7.0"
+    static let featureVersion = "0.8.0"
 
     @Published var enabled: Bool = false
 
@@ -18,7 +18,12 @@ final class AppModel: ObservableObject {
     @Published private(set) var controllerDiagnosticsText: String = ""
     @Published private(set) var controllerLastEventText: String = ""
 
+    // Milestone 8: persisted config (single profile)
+    @Published private(set) var config: AppConfig = .default()
+
     private var cancellables = Set<AnyCancellable>()
+
+    private let configStore = ConfigStore()
 
     private let permission = PermissionService()
     private let controller = ControllerService()
@@ -27,6 +32,8 @@ final class AppModel: ObservableObject {
     private lazy var engine = ActionEngine(controller: controller, mouse: mouse, keyboard: keyboard)
 
     init() {
+        config = configStore.load()
+
         // Milestone 4: Mirror controller state to debugState (critical for UI updates)
         controller.$state
             .receive(on: RunLoop.main)
@@ -97,6 +104,16 @@ final class AppModel: ObservableObject {
     func testTypeEnter() {
         guard permission.isTrusted else { return }
         keyboard.tap(.returnKey)
+    }
+
+    // Milestone 8: config write helpers (UI will call later)
+    func updateConfig(_ newConfig: AppConfig) {
+        config = newConfig
+        configStore.save(newConfig)
+    }
+
+    func resetConfigToDefault() {
+        config = configStore.resetToDefault()
     }
 
     func quit() {
