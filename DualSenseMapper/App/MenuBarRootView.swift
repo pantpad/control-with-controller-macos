@@ -10,6 +10,7 @@ struct MenuBarRootView: View {
                     model.setEnabled(newValue)
                 }
 
+            Text("Version: \(model.versionText)")
             Text("Accessibility: \(model.accessibilityStatusText)")
             Text("Controller: \(model.controllerStatusText)")
 

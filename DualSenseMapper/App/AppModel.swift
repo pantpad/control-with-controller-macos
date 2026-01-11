@@ -5,6 +5,9 @@ import Combine
 // Milestone 4: Added controller state mirroring to debugState
 @MainActor
 final class AppModel: ObservableObject {
+    /// Bump this when you complete a milestone/feature.
+    static let featureVersion = "0.4.0"
+
     @Published var enabled: Bool = false
 
     // ✅ Published mirrors so SwiftUI updates while menu is open
@@ -34,6 +37,12 @@ final class AppModel: ObservableObject {
                 self?.controllerConnected = connected
             }
             .store(in: &cancellables)
+    }
+
+    var versionText: String {
+        let short = (Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String) ?? "?"
+        let build = (Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String) ?? "?"
+        return "v\(Self.featureVersion) (app \(short) b\(build))"
     }
 
     var accessibilityStatusText: String {
