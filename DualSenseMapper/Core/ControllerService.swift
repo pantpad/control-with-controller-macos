@@ -109,6 +109,10 @@ final class ControllerService: ObservableObject {
             let ts = Self.dateFormatter.string(from: Date())
             self.lastEventText = "\(ts) \(describeElement(element))"
 
+            func kvcButtonPressed(_ key: String) -> Bool {
+                (gamepad.value(forKey: key) as? GCControllerButtonInput)?.isPressed ?? false
+            }
+
             self.state = GamepadState(
                 leftX: gamepad.leftThumbstick.xAxis.value,
                 leftY: gamepad.leftThumbstick.yAxis.value,
@@ -120,6 +124,9 @@ final class ControllerService: ObservableObject {
                 r2: gamepad.rightTrigger.value,
 
                 cross: gamepad.buttonA.isPressed,
+                circle: gamepad.buttonB.isPressed,
+                square: gamepad.buttonX.isPressed,
+                triangle: gamepad.buttonY.isPressed,
 
                 dpadUp: gamepad.dpad.up.isPressed,
                 dpadDown: gamepad.dpad.down.isPressed,
@@ -127,7 +134,13 @@ final class ControllerService: ObservableObject {
                 dpadRight: gamepad.dpad.right.isPressed,
 
                 l1: gamepad.leftShoulder.isPressed,
-                r1: gamepad.rightShoulder.isPressed
+                r1: gamepad.rightShoulder.isPressed,
+
+                l3: kvcButtonPressed("leftThumbstickButton"),
+                r3: kvcButtonPressed("rightThumbstickButton"),
+
+                options: kvcButtonPressed("buttonMenu"),
+                create: kvcButtonPressed("buttonOptions")
             )
         }
     }

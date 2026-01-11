@@ -29,7 +29,7 @@ final class AppModel: ObservableObject {
     private let controller = ControllerService()
     private let mouse = MouseInjector()
     private let keyboard = KeyboardInjector()
-    private lazy var engine = ActionEngine(controller: controller, mouse: mouse, keyboard: keyboard)
+    private lazy var engine = ActionEngine(controller: controller, mouse: mouse, keyboard: keyboard, config: config)
 
     init() {
         config = configStore.load()
@@ -110,10 +110,13 @@ final class AppModel: ObservableObject {
     func updateConfig(_ newConfig: AppConfig) {
         config = newConfig
         configStore.save(newConfig)
+        engine.setConfig(newConfig)
     }
 
     func resetConfigToDefault() {
-        config = configStore.resetToDefault()
+        let cfg = configStore.resetToDefault()
+        config = cfg
+        engine.setConfig(cfg)
     }
 
     func quit() {

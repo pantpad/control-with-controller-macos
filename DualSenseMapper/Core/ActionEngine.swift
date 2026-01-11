@@ -1,10 +1,13 @@
 import Foundation
+import CoreGraphics
 
 @MainActor
 final class ActionEngine {
     private let controller: ControllerService
     private let mouse: MouseInjector
     private let keyboard: KeyboardInjector
+
+    private var config: AppConfig
 
     private var timer: Timer?
 
@@ -17,10 +20,18 @@ final class ActionEngine {
 
     private var scrollAccumulator: Double = 0
 
-    init(controller: ControllerService, mouse: MouseInjector, keyboard: KeyboardInjector) {
+    init(controller: ControllerService, mouse: MouseInjector, keyboard: KeyboardInjector, config: AppConfig) {
         self.controller = controller
         self.mouse = mouse
         self.keyboard = keyboard
+        self.config = config
+    }
+
+    func setConfig(_ newConfig: AppConfig) {
+        if hasPrevState {
+            releaseOutputs(state: prevState, config: config)
+        }
+        config = newConfig
     }
 
     func start() {
@@ -39,7 +50,7 @@ final class ActionEngine {
         timer = nil
 
         if hasPrevState {
-            releaseOutputs(state: prevState)
+            releaseOutputs(state: prevState, config: config)
         }
 
         accumX = 0
@@ -52,7 +63,7 @@ final class ActionEngine {
     private func tick(dt: Double) {
         guard controller.isConnected else {
             if hasPrevState {
-                releaseOutputs(state: prevState)
+                releaseOutputs(state: prevState, config: config)
             }
             hasPrevState = false
             scrollAccumulator = 0
@@ -67,15 +78,17 @@ final class ActionEngine {
             return
         }
 
-        handleMovement(state: state, dt: dt)
-        handleMouseButtons(state: state)
+        let prevPressed = pressedMap(from: prevState)
+        let pressed = pressedMap(from: state)
+
+        handleMovement(state: state, dt: dt, pressed: pressed)
         handleScroll(state: state, dt: dt)
-        handleKeyboard(state: state)
+        handleBindings(pressed: pressed, prevPressed: prevPressed)
 
         prevState = state
     }
 
-    private func handleMovement(state: GamepadState, dt: Double) {
+    private func handleMovement(state: GamepadState, dt: Double, pressed: [InputID: Bool]) {
         let (x, y) = applyDeadZone(x: state.leftX, y: state.leftY, deadZone: Mapping.stickDeadZone)
         if x == 0, y == 0 {
             accumX = 0
@@ -94,28 +107,149 @@ final class ActionEngine {
         accumX -= Double(dx)
         accumY -= Double(dy)
 
-        let leftButtonDown = state.cross
+        let leftButtonDown = isMouseLeftHoldDown(pressed: pressed)
 
         // GameController Y is positive-up; Quartz mouse coords are positive-down.
         mouse.moveBy(dx: dx, dy: -dy, dragging: leftButtonDown)
     }
 
-    private func handleMouseButtons(state: GamepadState) {
-        let leftDownNow = state.cross
-        let leftDownWas = prevState.cross
-        if leftDownNow && !leftDownWas { mouse.leftDownAtCurrentCursor() }
-        if !leftDownNow && leftDownWas { mouse.leftUpAtCurrentCursor() }
+    private func pressedMap(from state: GamepadState) -> [InputID: Bool] {
+        let threshold = config.triggerThreshold
 
-        let rightDownNow = state.l2 > Mapping.triggerDownThreshold
-        let rightDownWas = prevState.l2 > Mapping.triggerDownThreshold
-        if rightDownNow && !rightDownWas { mouse.rightDownAtCurrentCursor() }
-        if !rightDownNow && rightDownWas { mouse.rightUpAtCurrentCursor() }
+        return [
+            .dpadUp: state.dpadUp,
+            .dpadDown: state.dpadDown,
+            .dpadLeft: state.dpadLeft,
+            .dpadRight: state.dpadRight,
 
-        if state.l1 && !prevState.l1 { mouse.otherButtonDown(buttonNumber: Mapping.mouseButton4Number) }
-        if !state.l1 && prevState.l1 { mouse.otherButtonUp(buttonNumber: Mapping.mouseButton4Number) }
+            .faceSouth: state.cross,
+            .faceEast: state.circle,
+            .faceWest: state.square,
+            .faceNorth: state.triangle,
 
-        if state.r1 && !prevState.r1 { mouse.otherButtonDown(buttonNumber: Mapping.mouseButton5Number) }
-        if !state.r1 && prevState.r1 { mouse.otherButtonUp(buttonNumber: Mapping.mouseButton5Number) }
+            .l1: state.l1,
+            .r1: state.r1,
+
+            .l2: state.l2 > threshold,
+            .r2: state.r2 > threshold,
+
+            .l3: state.l3,
+            .r3: state.r3,
+
+            .options: state.options,
+            .create: state.create,
+        ]
+    }
+
+    private func isMouseLeftHoldDown(pressed: [InputID: Bool]) -> Bool {
+        for (input, action) in config.bindings {
+            guard pressed[input] == true else { continue }
+            if case .mouseLeftHold = action { return true }
+        }
+        return false
+    }
+
+    private func handleBindings(pressed: [InputID: Bool], prevPressed: [InputID: Bool]) {
+        for input in InputID.allCases {
+            let now = pressed[input] ?? false
+            let was = prevPressed[input] ?? false
+            if now == was { continue }
+
+            let action = config.bindings[input] ?? .none
+            if case .none = action { continue }
+
+            if now {
+                performPress(action)
+            } else {
+                performRelease(action)
+            }
+        }
+    }
+
+    private func performPress(_ action: Action) {
+        switch action {
+        case .none:
+            break
+
+        case .mouseLeftHold:
+            mouse.leftDownAtCurrentCursor()
+        case .mouseRightHold:
+            mouse.rightDownAtCurrentCursor()
+        case .mouseMiddleClick:
+            mouse.otherButtonDown(buttonNumber: 2)
+            mouse.otherButtonUp(buttonNumber: 2)
+        case .mouseButton4:
+            mouse.otherButtonDown(buttonNumber: Mapping.mouseButton4Number)
+        case .mouseButton5:
+            mouse.otherButtonDown(buttonNumber: Mapping.mouseButton5Number)
+
+        case let .keyTap(spec):
+            tapKeySpec(spec)
+        case let .keyCombo(spec):
+            tapKeySpec(spec)
+        case let .keyHold(spec):
+            keySpecDown(spec)
+        }
+    }
+
+    private func performRelease(_ action: Action) {
+        switch action {
+        case .none:
+            break
+
+        case .mouseLeftHold:
+            mouse.leftUpAtCurrentCursor()
+        case .mouseRightHold:
+            mouse.rightUpAtCurrentCursor()
+        case .mouseMiddleClick:
+            break
+        case .mouseButton4:
+            mouse.otherButtonUp(buttonNumber: Mapping.mouseButton4Number)
+        case .mouseButton5:
+            mouse.otherButtonUp(buttonNumber: Mapping.mouseButton5Number)
+
+        case .keyTap, .keyCombo:
+            break
+        case let .keyHold(spec):
+            keySpecUp(spec)
+        }
+    }
+
+    private func tapKeySpec(_ spec: KeySpec) {
+        modifiersDown(spec.modifiers)
+        keyboard.tapKeyCode(CGKeyCode(spec.keyCode))
+        modifiersUp(spec.modifiers)
+    }
+
+    private func keySpecDown(_ spec: KeySpec) {
+        modifiersDown(spec.modifiers)
+        keyboard.keyCode(CGKeyCode(spec.keyCode), down: true)
+    }
+
+    private func keySpecUp(_ spec: KeySpec) {
+        keyboard.keyCode(CGKeyCode(spec.keyCode), down: false)
+        modifiersUp(spec.modifiers)
+    }
+
+    private func modifiersDown(_ mods: Set<KeyModifier>) {
+        for mod in mods {
+            keyboard.keyCode(modifierKeyCode(mod), down: true)
+        }
+    }
+
+    private func modifiersUp(_ mods: Set<KeyModifier>) {
+        for mod in mods {
+            keyboard.keyCode(modifierKeyCode(mod), down: false)
+        }
+    }
+
+    private func modifierKeyCode(_ mod: KeyModifier) -> CGKeyCode {
+        switch mod {
+        case .command: return 0x37
+        case .option: return 0x3A
+        case .control: return 0x3B
+        case .shift: return 0x38
+        }
     }
 
     private func handleScroll(state: GamepadState, dt: Double) {
@@ -135,32 +269,12 @@ final class ActionEngine {
         mouse.scroll(deltaY: Int32(delta))
     }
 
-    private func handleKeyboard(state: GamepadState) {
-        if state.dpadLeft && !prevState.dpadLeft { keyboard.key(.z, down: true) }
-        if !state.dpadLeft && prevState.dpadLeft { keyboard.key(.z, down: false) }
-
-        if state.dpadRight && !prevState.dpadRight { keyboard.key(.x, down: true) }
-        if !state.dpadRight && prevState.dpadRight { keyboard.key(.x, down: false) }
-
-        // D-pad up => Alt+Tab
-        if state.dpadUp && !prevState.dpadUp {
-            keyboard.key(.option, down: true)
-            keyboard.tap(.tab)
+    private func releaseOutputs(state: GamepadState, config: AppConfig) {
+        let pressed = pressedMap(from: state)
+        for (input, action) in config.bindings {
+            guard pressed[input] == true else { continue }
+            performRelease(action)
         }
-        if !state.dpadUp && prevState.dpadUp {
-            keyboard.key(.option, down: false)
-        }
-    }
-
-    private func releaseOutputs(state: GamepadState) {
-        if state.cross { mouse.leftUpAtCurrentCursor() }
-        if state.l2 > Mapping.triggerDownThreshold { mouse.rightUpAtCurrentCursor() }
-        if state.l1 { mouse.otherButtonUp(buttonNumber: Mapping.mouseButton4Number) }
-        if state.r1 { mouse.otherButtonUp(buttonNumber: Mapping.mouseButton5Number) }
-
-        if state.dpadLeft { keyboard.key(.z, down: false) }
-        if state.dpadRight { keyboard.key(.x, down: false) }
-        if state.dpadUp { keyboard.key(.option, down: false) }
     }
 
     private func applyDeadZone(x: Float, y: Float, deadZone: Float) -> (Float, Float) {

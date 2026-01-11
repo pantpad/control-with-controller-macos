@@ -31,6 +31,15 @@ final class KeyboardInjector {
         self.key(key, down: false)
     }
 
+    func keyCode(_ code: CGKeyCode, down: Bool) {
+        post(code, down: down)
+    }
+
+    func tapKeyCode(_ code: CGKeyCode) {
+        keyCode(code, down: true)
+        keyCode(code, down: false)
+    }
+
     private func post(_ code: CGKeyCode, down: Bool) {
         guard let ev = CGEvent(keyboardEventSource: source, virtualKey: code, keyDown: down) else { return }
         ev.post(tap: .cghidEventTap)
