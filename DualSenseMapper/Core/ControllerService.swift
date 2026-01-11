@@ -1,7 +1,7 @@
 import Foundation
 import GameController
 
-// Milestone 4: Added controller state reading via valueChangedHandler
+// Milestone 4: Controller state reading via valueChangedHandler
 @MainActor
 final class ControllerService: ObservableObject {
     @Published private(set) var state = GamepadState()
@@ -9,7 +9,15 @@ final class ControllerService: ObservableObject {
 
     private var activeController: GCController?
 
+    // Keep a strong reference to the active profile so its handlers stay alive.
+    private var activeProfile: AnyObject?
+
     init() {
+        // Menu bar apps are often “background” from GameController’s perspective.
+        // Without this, valueChangedHandler may not fire unless the app is frontmost.
+        GCController.shouldMonitorBackgroundEvents = true
+        GCController.startWirelessControllerDiscovery(completionHandler: {})
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(controllerDidConnect(_:)),
@@ -23,21 +31,22 @@ final class ControllerService: ObservableObject {
             object: nil
         )
 
-        // Check if controller already connected
+        // Attach immediately if already connected.
         if let first = GCController.controllers().first {
             attach(first)
         }
     }
 
     @objc private func controllerDidConnect(_ note: Notification) {
-        guard let c = note.object as? GCController else { return }
-        attach(c)
+        guard let controller = note.object as? GCController else { return }
+        attach(controller)
     }
 
     @objc private func controllerDidDisconnect(_ note: Notification) {
-        guard let c = note.object as? GCController else { return }
-        if c == activeController {
+        guard let controller = note.object as? GCController else { return }
+        if controller == activeController {
             activeController = nil
+            activeProfile = nil
             isConnected = false
             state = GamepadState()
         }
@@ -47,33 +56,35 @@ final class ControllerService: ObservableObject {
         activeController = controller
         isConnected = true
 
-        // Milestone 4: Read controller input via extendedGamepad
-        // (DualSense controllers support extendedGamepad profile)
+        // Ensure callbacks land on main; we mutate @Published state.
+        controller.handlerQueue = .main
+
+        // DualSense controllers should expose the extendedGamepad profile.
         if let eg = controller.extendedGamepad {
-            wireExtendedLikeInputs(eg)
+            activeProfile = eg
+            wireExtendedInputs(eg)
+        } else {
+            activeProfile = nil
+            state = GamepadState()
         }
     }
 
-    private func wireExtendedLikeInputs(_ pad: GCExtendedGamepad) {
+    private func wireExtendedInputs(_ pad: GCExtendedGamepad) {
         pad.valueChangedHandler = { [weak self] gamepad, _ in
             guard let self else { return }
-            var s = self.state
 
-            s.leftX = gamepad.leftThumbstick.xAxis.value
-            s.leftY = gamepad.leftThumbstick.yAxis.value
-
-            s.l2 = gamepad.leftTrigger.value
-            s.r2 = gamepad.rightTrigger.value
-
-            s.dpadUp = gamepad.dpad.up.isPressed
-            s.dpadDown = gamepad.dpad.down.isPressed
-            s.dpadLeft = gamepad.dpad.left.isPressed
-            s.dpadRight = gamepad.dpad.right.isPressed
-
-            s.l1 = gamepad.leftShoulder.isPressed
-            s.r1 = gamepad.rightShoulder.isPressed
-
-            self.state = s
+            self.state = GamepadState(
+                leftX: gamepad.leftThumbstick.xAxis.value,
+                leftY: gamepad.leftThumbstick.yAxis.value,
+                l2: gamepad.leftTrigger.value,
+                r2: gamepad.rightTrigger.value,
+                dpadUp: gamepad.dpad.up.isPressed,
+                dpadDown: gamepad.dpad.down.isPressed,
+                dpadLeft: gamepad.dpad.left.isPressed,
+                dpadRight: gamepad.dpad.right.isPressed,
+                l1: gamepad.leftShoulder.isPressed,
+                r1: gamepad.rightShoulder.isPressed
+            )
         }
     }
 }
