@@ -1,5 +1,0 @@
----
-triple:          'arm64-apple-darwin'
-binary-path:     '/Users/forward/projects/control-cursor/build/Build/Products/Release/DualSenseMapper.app/Contents/MacOS/DualSenseMapper'
-relocations:     []
-...
