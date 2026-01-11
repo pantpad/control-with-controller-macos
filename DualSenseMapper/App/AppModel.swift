@@ -14,6 +14,10 @@ final class AppModel: ObservableObject {
     @Published private(set) var debugState: GamepadState = .init()
     @Published private(set) var controllerConnected: Bool = false
 
+    // Step 2: controller diagnostics surfaced in UI
+    @Published private(set) var controllerDiagnosticsText: String = ""
+    @Published private(set) var controllerLastEventText: String = ""
+
     private var cancellables = Set<AnyCancellable>()
 
     private let permission = PermissionService()
@@ -35,6 +39,21 @@ final class AppModel: ObservableObject {
             .receive(on: RunLoop.main)
             .sink { [weak self] connected in
                 self?.controllerConnected = connected
+            }
+            .store(in: &cancellables)
+
+        // Step 2: Diagnostics
+        controller.$diagnosticsText
+            .receive(on: RunLoop.main)
+            .sink { [weak self] text in
+                self?.controllerDiagnosticsText = text
+            }
+            .store(in: &cancellables)
+
+        controller.$lastEventText
+            .receive(on: RunLoop.main)
+            .sink { [weak self] text in
+                self?.controllerLastEventText = text
             }
             .store(in: &cancellables)
     }

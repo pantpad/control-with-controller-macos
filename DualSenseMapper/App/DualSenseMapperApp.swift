@@ -9,5 +9,8 @@ struct DualSenseMapperApp: App {
             MenuBarRootView()
                 .environmentObject(model)
         }
+        // `.menu` style often doesn't refresh while open.
+        // Use a window-style popover so debug values update live.
+        .menuBarExtraStyle(.window)
     }
 }

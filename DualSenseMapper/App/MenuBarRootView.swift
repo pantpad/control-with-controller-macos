@@ -21,6 +21,17 @@ struct MenuBarRootView: View {
 
             Divider()
 
+            Text("Diagnostics")
+                .font(.headline)
+            Text(model.controllerDiagnosticsText)
+                .font(.system(.caption, design: .monospaced))
+                .textSelection(.enabled)
+            Text("Last event: \(model.controllerLastEventText)")
+                .font(.system(.caption, design: .monospaced))
+                .textSelection(.enabled)
+
+            Divider()
+
             // Milestone 2: manual injection checks
             Button("Test Mouse Click") { model.testMouseClick() }
             Button("Test Type Enter") { model.testTypeEnter() }
