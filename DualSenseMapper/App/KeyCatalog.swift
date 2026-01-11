@@ -59,7 +59,8 @@ enum KeyCatalog {
         KeyOption(keyCode: 0x2F, name: "."),
 
         // Common controls
-        KeyOption(keyCode: 0x24, name: "Return"),
+        KeyOption(keyCode: 0x24, name: "Enter"),
+        KeyOption(keyCode: 0x4C, name: "Keypad Enter"),
         KeyOption(keyCode: 0x30, name: "Tab"),
         KeyOption(keyCode: 0x31, name: "Space"),
         KeyOption(keyCode: 0x33, name: "Delete"),
