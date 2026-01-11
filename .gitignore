@@ -1,0 +1,10 @@
+# Build artifacts
+build/
+
+# macOS junk
+.DS_Store
+
+# Xcode per-user state
+**/xcuserdata/
+**/*.xcuserstate
+**/*.xcbkptlist
