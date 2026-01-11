@@ -6,7 +6,7 @@ import Combine
 @MainActor
 final class AppModel: ObservableObject {
     /// Bump this when you complete a milestone/feature.
-    static let featureVersion = "0.5.0"
+    static let featureVersion = "0.6.0"
 
     @Published var enabled: Bool = false
 
