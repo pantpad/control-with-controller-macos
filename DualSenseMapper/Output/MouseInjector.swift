@@ -8,13 +8,33 @@ final class MouseInjector {
         CGEvent(source: nil)?.location ?? .zero
     }
 
+    private func mainDisplayBounds() -> CGRect {
+        CGDisplayBounds(CGMainDisplayID())
+    }
+
+    private func clamp(_ point: CGPoint, to bounds: CGRect) -> CGPoint {
+        let maxX = bounds.maxX - 1
+        let maxY = bounds.maxY - 1
+
+        return CGPoint(
+            x: min(max(point.x, bounds.minX), maxX),
+            y: min(max(point.y, bounds.minY), maxY)
+        )
+    }
+
     func moveBy(dx: Int, dy: Int, dragging: Bool) {
-        var p = cursor()
-        p.x += CGFloat(dx)
-        p.y += CGFloat(dy)
+        let current = cursor()
+        let intended = CGPoint(x: current.x + CGFloat(dx), y: current.y + CGFloat(dy))
+        let p = clamp(intended, to: mainDisplayBounds())
 
         let type: CGEventType = dragging ? .leftMouseDragged : .mouseMoved
         guard let ev = CGEvent(mouseEventSource: source, mouseType: type, mouseCursorPosition: p, mouseButton: .left) else { return }
+
+        // Important for edge behavior (Dock auto-hide, etc.): keep delta fields set
+        // even when the cursor position is clamped.
+        ev.setIntegerValueField(.mouseEventDeltaX, value: Int64(dx))
+        ev.setIntegerValueField(.mouseEventDeltaY, value: Int64(dy))
+
         ev.post(tap: .cghidEventTap)
     }
 
