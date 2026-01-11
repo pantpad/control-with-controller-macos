@@ -6,8 +6,8 @@ enum Mapping {
 
     static let triggerDownThreshold: Float = 0.60
 
-    static let scrollRepeatHz: Double = 30
-    static let scrollDeltaPixels: Int32 = 40
+    static let scrollDeadZone: Float = 0.10
+    static let scrollSpeedPixelsPerSecond: Float = 2200
 
     // USB button numbering (Quartz): 3=button4, 4=button5
     static let mouseButton4Number: Int64 = 3

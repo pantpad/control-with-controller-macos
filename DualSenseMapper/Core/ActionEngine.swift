@@ -83,15 +83,15 @@ final class ActionEngine {
         accumX -= Double(dx)
         accumY -= Double(dy)
 
-        let leftButtonDown = state.r2 > Mapping.triggerDownThreshold
+        let leftButtonDown = state.cross
 
         // GameController Y is positive-up; Quartz mouse coords are positive-down.
         mouse.moveBy(dx: dx, dy: -dy, dragging: leftButtonDown)
     }
 
     private func handleMouseButtons(state: GamepadState) {
-        let leftDownNow = state.r2 > Mapping.triggerDownThreshold
-        let leftDownWas = prevState.r2 > Mapping.triggerDownThreshold
+        let leftDownNow = state.cross
+        let leftDownWas = prevState.cross
         if leftDownNow && !leftDownWas { mouse.leftDownAtCurrentCursor() }
         if !leftDownNow && leftDownWas { mouse.leftUpAtCurrentCursor() }
 
@@ -108,22 +108,20 @@ final class ActionEngine {
     }
 
     private func handleScroll(state: GamepadState, dt: Double) {
-        let up = state.dpadUp
-        let down = state.dpadDown
-
-        if (up && down) || (!up && !down) {
+        let y = applyAxisDeadZone(value: state.rightY, deadZone: Mapping.scrollDeadZone)
+        if y == 0 {
             scrollAccumulator = 0
             return
         }
 
-        scrollAccumulator += dt
-        let interval = 1.0 / Mapping.scrollRepeatHz
+        // Positive stick Y (up) => positive wheel delta (up).
+        scrollAccumulator += Double(y) * Double(Mapping.scrollSpeedPixelsPerSecond) * dt
 
-        while scrollAccumulator >= interval {
-            scrollAccumulator -= interval
-            let delta: Int32 = up ? Mapping.scrollDeltaPixels : -Mapping.scrollDeltaPixels
-            mouse.scroll(deltaY: delta)
-        }
+        let delta = Int(scrollAccumulator.rounded(.towardZero))
+        if delta == 0 { return }
+
+        scrollAccumulator -= Double(delta)
+        mouse.scroll(deltaY: Int32(delta))
     }
 
     private func applyDeadZone(x: Float, y: Float, deadZone: Float) -> (Float, Float) {
@@ -133,5 +131,13 @@ final class ActionEngine {
         // Scale so movement ramps smoothly from the edge of the dead zone.
         let scaled = (mag - deadZone) / (1 - deadZone)
         return ((x / mag) * scaled, (y / mag) * scaled)
+    }
+
+    private func applyAxisDeadZone(value: Float, deadZone: Float) -> Float {
+        let absValue = abs(value)
+        if absValue < deadZone { return 0 }
+
+        let scaled = (absValue - deadZone) / (1 - deadZone)
+        return (value >= 0 ? 1 : -1) * scaled
     }
 }

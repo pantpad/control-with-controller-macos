@@ -112,12 +112,20 @@ final class ControllerService: ObservableObject {
             self.state = GamepadState(
                 leftX: gamepad.leftThumbstick.xAxis.value,
                 leftY: gamepad.leftThumbstick.yAxis.value,
+
+                rightX: gamepad.rightThumbstick.xAxis.value,
+                rightY: gamepad.rightThumbstick.yAxis.value,
+
                 l2: gamepad.leftTrigger.value,
                 r2: gamepad.rightTrigger.value,
+
+                cross: gamepad.buttonA.isPressed,
+
                 dpadUp: gamepad.dpad.up.isPressed,
                 dpadDown: gamepad.dpad.down.isPressed,
                 dpadLeft: gamepad.dpad.left.isPressed,
                 dpadRight: gamepad.dpad.right.isPressed,
+
                 l1: gamepad.leftShoulder.isPressed,
                 r1: gamepad.rightShoulder.isPressed
             )
