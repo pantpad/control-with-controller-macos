@@ -20,6 +20,8 @@
 		AA00000B /* ActionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000034 /* ActionEngine.swift */; };
 		AA00000C /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000035 /* AppConfig.swift */; };
 		AA00000D /* ConfigStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000036 /* ConfigStore.swift */; };
+		AA00000E /* KeyCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000037 /* KeyCatalog.swift */; };
+		AA00000F /* MappingEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000038 /* MappingEditorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,8 @@
 		AA000034 /* ActionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionEngine.swift; sourceTree = "<group>"; };
 		AA000035 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		AA000036 /* ConfigStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigStore.swift; sourceTree = "<group>"; };
+		AA000037 /* KeyCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCatalog.swift; sourceTree = "<group>"; };
+		AA000038 /* MappingEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingEditorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +80,8 @@
 				AA000013 /* DebugControllerView.swift */,
 				AA000014 /* AppModel.swift */,
 				AA000015 /* GamepadState.swift */,
+				AA000037 /* KeyCatalog.swift */,
+				AA000038 /* MappingEditorView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -175,6 +181,8 @@
 				AA00000B /* ActionEngine.swift in Sources */,
 				AA00000C /* AppConfig.swift in Sources */,
 				AA00000D /* ConfigStore.swift in Sources */,
+				AA00000E /* KeyCatalog.swift in Sources */,
+				AA00000F /* MappingEditorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

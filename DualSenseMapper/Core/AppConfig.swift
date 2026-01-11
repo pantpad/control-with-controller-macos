@@ -65,6 +65,32 @@ enum Action: Codable, Hashable {
     case keyCombo(KeySpec) // modifiers down + key tap + modifiers up
 }
 
+extension InputID {
+    var displayName: String {
+        switch self {
+        case .dpadUp: return "D-pad Up"
+        case .dpadDown: return "D-pad Down"
+        case .dpadLeft: return "D-pad Left"
+        case .dpadRight: return "D-pad Right"
+
+        case .faceSouth: return "Cross (X)"
+        case .faceEast: return "Circle"
+        case .faceWest: return "Square"
+        case .faceNorth: return "Triangle"
+
+        case .l1: return "L1"
+        case .r1: return "R1"
+        case .l2: return "L2"
+        case .r2: return "R2"
+        case .l3: return "L3"
+        case .r3: return "R3"
+
+        case .options: return "Options/Menu"
+        case .create: return "Create/Share"
+        }
+    }
+}
+
 struct AppConfig: Codable, Hashable {
     static let currentSchemaVersion = 1
 

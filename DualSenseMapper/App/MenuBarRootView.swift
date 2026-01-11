@@ -1,7 +1,9 @@
 import SwiftUI
+import AppKit
 
 struct MenuBarRootView: View {
     @EnvironmentObject var model: AppModel
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -30,6 +32,13 @@ struct MenuBarRootView: View {
                 .font(.system(.caption, design: .monospaced))
                 .textSelection(.enabled)
 
+            Divider()
+
+            // Milestone 8.2: mapping editor (dedicated window, not sheet)
+            Button("Edit Mappings…") {
+                NSApp.activate(ignoringOtherApps: true)
+                openWindow(id: "mappings")
+            }
             Divider()
 
             // Milestone 2: manual injection checks
