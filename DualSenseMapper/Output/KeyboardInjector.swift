@@ -3,18 +3,32 @@ import CoreGraphics
 
 enum SimpleKey {
     case returnKey
+    case tab
+    case option
+    case z
+    case x
+
+    var keyCode: CGKeyCode {
+        switch self {
+        case .returnKey: return 0x24
+        case .tab: return 0x30
+        case .option: return 0x3A
+        case .z: return 0x06
+        case .x: return 0x07
+        }
+    }
 }
 
 final class KeyboardInjector {
     private let source = CGEventSource(stateID: .hidSystemState)
 
+    func key(_ key: SimpleKey, down: Bool) {
+        post(key.keyCode, down: down)
+    }
+
     func tap(_ key: SimpleKey) {
-        let code: CGKeyCode
-        switch key {
-        case .returnKey: code = 0x24
-        }
-        post(code, down: true)
-        post(code, down: false)
+        self.key(key, down: true)
+        self.key(key, down: false)
     }
 
     private func post(_ code: CGKeyCode, down: Bool) {

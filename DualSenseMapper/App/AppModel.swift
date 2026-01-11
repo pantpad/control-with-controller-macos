@@ -6,7 +6,7 @@ import Combine
 @MainActor
 final class AppModel: ObservableObject {
     /// Bump this when you complete a milestone/feature.
-    static let featureVersion = "0.6.0"
+    static let featureVersion = "0.7.0"
 
     @Published var enabled: Bool = false
 
@@ -24,7 +24,7 @@ final class AppModel: ObservableObject {
     private let controller = ControllerService()
     private let mouse = MouseInjector()
     private let keyboard = KeyboardInjector()
-    private lazy var engine = ActionEngine(controller: controller, mouse: mouse)
+    private lazy var engine = ActionEngine(controller: controller, mouse: mouse, keyboard: keyboard)
 
     init() {
         // Milestone 4: Mirror controller state to debugState (critical for UI updates)
