@@ -15,6 +15,7 @@
 		AA000006 /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000021 /* PermissionService.swift */; };
 		AA000007 /* MouseInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000031 /* MouseInjector.swift */; };
 		AA000008 /* KeyboardInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000032 /* KeyboardInjector.swift */; };
+		AA000009 /* ControllerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000022 /* ControllerService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		AA000014 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		AA000015 /* GamepadState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamepadState.swift; sourceTree = "<group>"; };
 		AA000021 /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
+		AA000022 /* ControllerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerService.swift; sourceTree = "<group>"; };
 		AA000031 /* MouseInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseInjector.swift; sourceTree = "<group>"; };
 		AA000032 /* KeyboardInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardInjector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				AA000021 /* PermissionService.swift */,
+				AA000022 /* ControllerService.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 				AA000006 /* PermissionService.swift in Sources */,
 				AA000007 /* MouseInjector.swift in Sources */,
 				AA000008 /* KeyboardInjector.swift in Sources */,
+				AA000009 /* ControllerService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
