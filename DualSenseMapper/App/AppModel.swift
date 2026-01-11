@@ -6,7 +6,7 @@ import Combine
 @MainActor
 final class AppModel: ObservableObject {
     /// Bump this when you complete a milestone/feature.
-    static let featureVersion = "0.4.0"
+    static let featureVersion = "0.5.0"
 
     @Published var enabled: Bool = false
 
@@ -24,6 +24,7 @@ final class AppModel: ObservableObject {
     private let controller = ControllerService()
     private let mouse = MouseInjector()
     private let keyboard = KeyboardInjector()
+    private lazy var engine = ActionEngine(controller: controller, mouse: mouse)
 
     init() {
         // Milestone 4: Mirror controller state to debugState (critical for UI updates)
@@ -80,10 +81,10 @@ final class AppModel: ObservableObject {
                 enabled = false
                 return
             }
-            // Permission granted - enabled stays ON
-            // (No functionality yet - will add in later milestones)
+            // Milestone 5: start action engine
+            engine.start()
         } else {
-            // Enabled OFF - nothing to do yet
+            engine.stop()
         }
     }
 
