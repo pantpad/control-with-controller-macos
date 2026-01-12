@@ -15,6 +15,9 @@ Minimal macOS menu bar utility that maps a DualSense controller to mouse/keyboar
 - Xcode 16.x
 - DualSense (PS5) Controller
 
+## Future Work
+- [ ] **Refresh-rate-smooth cursor movement** — Currently runs at fixed 120Hz timer, which can look choppy on 240Hz+ displays. Plan: use CVDisplayLink to sync cursor/scroll ticks to the active display's refresh rate, and measure real dt for consistent speed.
+
 ## Build & Run (Xcode)
 1. Open `DualSenseMapper.xcodeproj` in Xcode.
 2. Select the `DualSenseMapper` scheme and your Mac as run destination.
